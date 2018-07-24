@@ -1,0 +1,18 @@
+{
+  "name": "easy-notes-app",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wcho0907",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.4",
+    "request": "^2.87.0"
+  }
+}

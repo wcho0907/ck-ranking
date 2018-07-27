@@ -1,13 +1,13 @@
-//===========================================================================
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const async = require('async');
 
 // If modifying these scopes, delete credentials.json.
-//const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+//const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
-//===========================================================================
+
 var respon;
 exports.rankAll = (req, res) => {
     respon = res;
@@ -18,7 +18,6 @@ exports.rankAll = (req, res) => {
     });
 }
 
-
 /**
  * Prints the names and majors of students in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
@@ -26,60 +25,65 @@ exports.rankAll = (req, res) => {
  */
 function listMajors(auth) {
   const sheets = google.sheets({version: 'v4', auth});
-  sheets.spreadsheets.values.get({
-    spreadsheetId: '1FYy9kGtTzu7OgkJY-R6v89FOxt_99Cj09aQ8WWBgO54',
-    range: 'Sheet1'
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const rows = res.data.values;
-    console.log("rows: " + rows.length);
-    respon.send(rows);
-    //respon.send("[ ['Void', 'Canvas', 'Website']");
-    if (rows.length) {
-      console.log('Name, Major:');
-      // Print columns A and E, which correspond to indices 0 and 4.
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]}, ${row[2]}, ${row[3]}, ${row[4]}, ${row[5]}, ${row[6]}, ${row[7]}, ${row[8]}, ${row[9]}`);
-      });
-      
-    } else {
-      console.log('No data found.');
-    }
-  });
-    // var body = {
-    //     values: [ ["Void", "Canvas", "Website"]],
-    //     valueInputOption: "USER_ENTERED"
-    // };
-
-    // sheets.spreadsheets.values.append({
-    // auth: auth,
-    // spreadsheetId: '1mRb2dSKCxdIY1ZH61UM5BfJDoYTTiMA3i30vHSuMet4',
-    // range: 'Sheet1!A2:B', //Change Sheet1 if your worksheet's name is something else
-    // valueInputOption: "USER_ENTERED",
-    // resource: {
-    //     values: [ ["Void", "Canvas", "Website"], ["Paul", "Shan", "Human"] ]
-    // }
-    // }, (err, response) => {
-    // if (err) {
-    //     console.log('The API returned an error: ' + err);
-    //     return;
-    // } else {
-    //     console.log("Appended");
-    // }
-    // });
-
-    // var data = sheets.spreadsheets.values.get("1mRb2dSKCxdIY1ZH61UM5BfJDoYTTiMA3i30vHSuMet4","Sheet1"); 
-    // // returned value list[][]
-    // var arr = data.values;
   
-    // // last row with data
-    // var rows = arr.length;
-    // console.log("rows: " + rows);
-    // // last column with data
-    // var cols = arr.reduce(function(accumulator, el, i) {
-    //   if (i == 1) { accumulator = accumulator.length } 
-    //   cposole("cols: " + Math.max(accumulator, el.length));
-    // });
+  async.parallel([
+    function(callback) {
+        sheets.spreadsheets.values.get({
+            spreadsheetId: '1FYy9kGtTzu7OgkJY-R6v89FOxt_99Cj09aQ8WWBgO54',
+            range: 'Sheet1'
+        }, (err, res) => {
+            if (err) return console.log('The API returned an error: ' + err);
+            const rows = res.data.values;
+            console.log("meta rows: " + rows.length);
+            callback(false, rows);
+            //respon.send("[ ['Void', 'Canvas', 'Website']");
+            if (rows.length) {
+            console.log('Name, Major:');
+            // Print columns A and E, which correspond to indices 0 and 4.
+            rows.map((row) => {
+                console.log(`${row[0]}, ${row[1]}, ${row[2]}, ${row[3]}, ${row[4]}, ${row[5]}, ${row[6]}, ${row[7]}, ${row[8]}, ${row[9]}`);
+            });
+            
+            } else {
+            console.log('No data found.');
+            }
+        });
+    },
+    function(callback) {
+        sheets.spreadsheets.values.get({
+            spreadsheetId: '1FYy9kGtTzu7OgkJY-R6v89FOxt_99Cj09aQ8WWBgO54',
+            range: 'data'
+        }, (err, res) => {
+            if (err) return console.log('The API returned an error: ' + err);
+            const rows = res.data.values;
+            console.log("data rows: " + rows.length);
+            callback(false, rows);
+            //respon.send("[ ['Void', 'Canvas', 'Website']");
+            if (rows.length) {
+            console.log('Name, Major:');
+            // Print columns A and E, which correspond to indices 0 and 4.
+            rows.map((row) => {
+                console.log(`${row[0]}, ${row[1]}, ${row[2]}, ${row[3]}, ${row[4]}, ${row[5]}, ${row[6]}, ${row[7]}, ${row[8]}, ${row[9]}`);
+            });
+            
+            } else {
+            console.log('No data found.');
+            }
+        });
+    }
+    ],
+    /*
+    * Collate results
+    */
+    function(err, results) {
+        if (err) {
+            console.log(err);
+            respon.send(500, 'Server Error');
+            return;
+        }
+        respon.send(results);
+    }
+  );
 }
 
 /**

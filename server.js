@@ -34,6 +34,16 @@ app.get('/', (req, res) => {
 // Require Notes routes
 require('./app/routes/note.routes.js')(app);
 
+var map = new Map();
+map.set('2-1', "foo");
+map.set('0-1', "bar");
+map.set('3-1', "baz");
+
+var mapAsc = new Map([...map.entries()].sort());
+
+console.log(mapAsc)
+
+
 // listen for requests
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");

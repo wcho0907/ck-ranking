@@ -53,20 +53,43 @@ function readSheets(auth) {
         ],
         //Collate results
         function (err, results) {
+            // 1. Get two sheets(meta, data) from googlesheets
             if (err) {
                 respon.send(500, 'Server Error');
                 console.log(err);
                 return;
             }
+            var returnObj = {};
+
+            // 2. 
             var metaRows = results[0];
             var scoreCriteria = {};
             var validCriteria = {};
+            var memtaTitle, metaTitleLen;
+            var criteriaObj = {};
             metaRows.map((row) => {
-                if(row[8]&&row[8].trim() === "Y"){
-                    if(row[7]&&row[7].trim() === "Y"){
-                        scoreCriteria[row[3].trim()] = "Y";
+                var row3 = row[3] ? row[3].trim() : "";
+
+                if(row3==="name"){
+                    metaTitle = row;
+                    metaTitleLen = metaTitle.length;
+                }
+                else{
+                    var criteriaAttr = {};
+                    if(row[8]&&row[8].trim() === "Y"){
+                        if(row[7]&&row[7].trim() === "Y"){
+                            scoreCriteria[row3] = "Y";
+                        }
+                        validCriteria[row3] = "Y";
                     }
-                    validCriteria[row[3].trim()] = "Y";
+
+                    criteriaAttr[metaTitle[3]] = row3;
+                    criteriaAttr[metaTitle[4]] = row[4] ? row[4].trim() : "";
+                    criteriaAttr[metaTitle[5]] = row[5] ? row[5].trim() : ""
+                    criteriaAttr[metaTitle[6]] = row[6] ? row[6].trim() : ""
+                    criteriaAttr[metaTitle[9]] = row[9] ? row[9].trim() : ""
+
+                    criteriaObj[row3] = criteriaAttr;
                 }
             });
             console.log(scoreCriteria);
@@ -74,19 +97,20 @@ function readSheets(auth) {
             
             var dataRows = results[1];
             var coins = [];
-            var keyRow, keyLen;
+            var dataTitle, dataTitleLen;
+            // 3. Build output data by coin
             dataRows.map((row) => {
                 if(row[0]==="coin"){
-                    keyRow = row;
-                    keyLen = keyRow.length
+                    dataTitle = row;
+                    dataTitleLen = dataTitle.length;
                 }
                 else{
                     // 1. Form coinSheetObj <-- contains all criteria from the data sheet
                     var coinSheetObj = {};
                     var score = 0;
                     
-                    for (var i = 0; i < keyLen; i++) {
-                        coinSheetObj[keyRow[i].trim()] = row[i] ? row[i].trim() : "";
+                    for (var i = 0; i < dataTitleLen; i++) {
+                        coinSheetObj[dataTitle[i].trim()] = row[i] ? row[i].trim() : "";
                     }
 
                     // 2. Traverse ordered and valid criteria of meta sheet to reform obj
@@ -102,7 +126,10 @@ function readSheets(auth) {
                 }
             });
             //respon.send(results);
-            respon.send(coins);
+            //respon.send(coins);
+            returnObj["criteria"] = criteriaObj
+            respon.send(returnObj);
+
             var end = new Date() - start;
             console.log("Execution time: ", end);
             return;

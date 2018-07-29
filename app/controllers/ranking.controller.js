@@ -6,6 +6,7 @@ const async = require('async');
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 //const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
+const COIN_PATH = './coin/';
 
 var respon;
 
@@ -48,6 +49,13 @@ function readSheets(auth) {
                 const rows = res.data.values;
                 console.log("data rows: " + rows.length);
                 callback(false, rows);
+            });
+        },
+        function (callback) {
+            fs.readFile(COIN_PATH + 'bitcoin.json', (err, content) => {
+                if (err) return console.log('Error loading client secret file:', err);
+                // Authorize a client with credentials, then call the Google Sheets API.
+                callback(false, JSON.parse(content));
             });
         }
         ],
@@ -119,15 +127,28 @@ function readSheets(auth) {
                         coinValidObj[prop] = coinSheetObj[prop];
                         if(scoreCriteria[prop]==="Y"){
                             coinValidObj[prop + "_v"] = coinSheetObj[prop + "_v"];
+                            score += parseFloat(coinSheetObj[prop + "_v"]);
                         }
-                        console.log("##" + prop);
+                        //console.log("##" + prop);
                     }
+                    coinValidObj["score"] = score.toString().trim();
                     coins.push(coinValidObj);
                 }
             });
-            //respon.send(results);
-            //respon.send(coins);
-            returnObj["criteria"] = criteriaObj
+
+            function compare(a,b) {
+                if (parseFloat(a.score) < parseFloat(b.score))
+                  return 1;
+                if (parseFloat(a.score) > parseFloat(b.score))
+                  return -1;
+                return 0;
+            }
+            coins.sort(compare);
+
+            returnObj["meta"] = {"criteria" : criteriaObj};
+            returnObj["data"] = coins;
+            returnObj["bitcoin"] = results[2];
+
             respon.send(returnObj);
 
             var end = new Date() - start;

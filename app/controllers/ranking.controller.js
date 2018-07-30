@@ -20,8 +20,6 @@ exports.rankAll = (req, res) => {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 function readSheets(auth) {
@@ -32,11 +30,11 @@ function readSheets(auth) {
         function (callback) {
             sheets.spreadsheets.values.get({
                 spreadsheetId: '1FYy9kGtTzu7OgkJY-R6v89FOxt_99Cj09aQ8WWBgO54',
-                range: 'Sheet1'
+                range: 'meta'
             }, (err, res) => {
                 if (err) return console.log('The API returned an error: ' + err);
                 const rows = res.data.values;
-                console.log("meta rows: " + rows.length);
+                console.log("meta rows: " + (parseInt(rows.length) - 1));
                 callback(false, rows);
             });
         },
@@ -47,15 +45,8 @@ function readSheets(auth) {
             }, (err, res) => {
                 if (err) return console.log('The API returned an error: ' + err);
                 const rows = res.data.values;
-                console.log("data rows: " + rows.length);
+                console.log("data rows: " + (parseInt(rows.length) - 1));
                 callback(false, rows);
-            });
-        },
-        function (callback) {
-            fs.readFile(COIN_PATH + 'bitcoin.json', (err, content) => {
-                if (err) return console.log('Error loading client secret file:', err);
-                // Authorize a client with credentials, then call the Google Sheets API.
-                callback(false, JSON.parse(content));
             });
         }
         ],
@@ -100,15 +91,17 @@ function readSheets(auth) {
                     criteriaObj[row3] = criteriaAttr;
                 }
             });
-            console.log(scoreCriteria);
-            console.log(validCriteria);
+            //console.log(scoreCriteria);
+            //console.log(validCriteria);
             
             var dataRows = results[1];
-            var coins = [];
+            var coinData = [];
+            var outputCoins = [];
             var dataTitle, dataTitleLen;
             // 3. Build output data by coin
             dataRows.map((row) => {
-                if(row[0]==="coin"){
+                var row0 = row[0];
+                if(row0==="coin"){
                     dataTitle = row;
                     dataTitleLen = dataTitle.length;
                 }
@@ -123,6 +116,8 @@ function readSheets(auth) {
 
                     // 2. Traverse ordered and valid criteria of meta sheet to reform obj
                     var coinValidObj = {};
+                    coinValidObj["id"] = row0;
+                    outputCoins.push(row0);
                     for (var prop in validCriteria) {
                         coinValidObj[prop] = coinSheetObj[prop];
                         if(scoreCriteria[prop]==="Y"){
@@ -132,7 +127,7 @@ function readSheets(auth) {
                         //console.log("##" + prop);
                     }
                     coinValidObj["score"] = score.toString().trim();
-                    coins.push(coinValidObj);
+                    coinData.push(coinValidObj);
                 }
             });
 
@@ -143,21 +138,33 @@ function readSheets(auth) {
                   return -1;
                 return 0;
             }
-            coins.sort(compare);
+            coinData.sort(compare);
 
-            returnObj["meta"] = {"criteria" : criteriaObj};
-            returnObj["data"] = coins;
-            returnObj["bitcoin"] = results[2];
+            var metaCoins = {};
+            async.every(outputCoins, function(theCoin, callback) {
+                fs.readFile(COIN_PATH + theCoin + '.json', (err, content) => {
+                    if (err) return console.log('Error loading client secret file:', err);
+                    var thisCoin = JSON.parse(content);
+                    //console.log(">>>>>>" + thisCoin.id + "  "+thisCoin);
+                    metaCoins[thisCoin.id] = thisCoin;
+                    callback(null, !err);
+                });
+            }, function(err, thsRes) {
+                returnObj["meta"] = {"criteria": criteriaObj, "coins": metaCoins};
+                returnObj["data"] = coinData;
+                respon.send(returnObj);
 
-            respon.send(returnObj);
-
-            var end = new Date() - start;
-            console.log("Execution time: ", end);
-            return;
+                var end = new Date() - start;
+                console.log("Execution time: ", end);
+                return;
+            });
         }
     );
 }
 
+function getCoinmeta(theCoins){
+
+}
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.

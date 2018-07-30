@@ -1,0 +1,96 @@
+{
+  "id": "litebitcoin",
+  "symbol": "lbtc",
+  "name": "LiteBitcoin",
+  "categories": [],
+  "localization": {
+    "en": "LiteBitcoin",
+    "es": "LiteBitcoin",
+    "de": "LiteBitcoin",
+    "nl": "LiteBitcoin",
+    "pt": "LiteBitcoin",
+    "fr": "LiteBitcoin",
+    "it": "LiteBitcoin",
+    "hu": "LiteBitcoin",
+    "ro": "LiteBitcoin",
+    "sv": "LiteBitcoin",
+    "pl": "LiteBitcoin",
+    "id": "LiteBitcoin",
+    "zh": "LiteBitcoin",
+    "zh-tw": "LiteBitcoin",
+    "ja": "LiteBitcoin",
+    "ko": "LiteBitcoin",
+    "ru": "LiteBitcoin",
+    "ar": "LiteBitcoin",
+    "th": "LiteBitcoin",
+    "vi": "LiteBitcoin",
+    "tr": "LiteBitcoin"
+  },
+  "description": {
+    "en": " ",
+    "es": " ",
+    "de": " ",
+    "nl": " ",
+    "pt": " ",
+    "fr": " ",
+    "it": " ",
+    "hu": " ",
+    "ro": " ",
+    "sv": " ",
+    "pl": " ",
+    "id": " ",
+    "zh": " ",
+    "zh-tw": " ",
+    "ja": " ",
+    "ko": " ",
+    "ru": " ",
+    "ar": " ",
+    "th": " ",
+    "vi": " ",
+    "tr": " "
+  },
+  "links": {
+    "homepage": [
+      "http://www.lbtc.info/",
+      null,
+      null
+    ],
+    "blockchain_site": [
+      "http://lites.thecryptochat.net/",
+      null,
+      null,
+      null,
+      null
+    ],
+    "official_forum_url": [
+      "",
+      null,
+      null
+    ],
+    "chat_url": [
+      null,
+      null,
+      null
+    ],
+    "announcement_url": [
+      null,
+      null
+    ],
+    "twitter_screen_name": "",
+    "facebook_username": "",
+    "bitcointalk_thread_identifier": 2081190,
+    "telegram_channel_identifier": ""
+  },
+  "image": {
+    "thumb": "https://assets.coingecko.com/coins/images/841/thumb/litebitcoin.png?1510040325",
+    "small": "https://assets.coingecko.com/coins/images/841/small/litebitcoin.png?1510040325"
+  },
+  "country_origin": null,
+  "market_cap_rank": 1576,
+  "coingecko_rank": 1661,
+  "coingecko_score": 15.377,
+  "developer_score": 11.76,
+  "community_score": 4.587,
+  "liquidity_score": 1.258,
+  "public_interest_score": 29.352
+}

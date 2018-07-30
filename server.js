@@ -12,19 +12,6 @@ app.use(bodyParser.json())
 
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
-const mongoose = require('mongoose');
-
-mongoose.Promise = global.Promise;
-
-// Connecting to the database
-mongoose.connect(dbConfig.url, { useNewUrlParser: true })
-.then(() => {
-    console.log("Successfully connected to the database");    
-}).catch(err => {
-    console.log('Could not connect to the database. Exiting now...');
-    process.exit();
-});
-
 
 // define a simple route
 app.get('/', (req, res) => {
@@ -32,17 +19,7 @@ app.get('/', (req, res) => {
 });
 
 // Require Notes routes
-require('./app/routes/note.routes.js')(app);
-
-var map = new Map();
-map.set('2-1', "foo");
-map.set('0-1', "bar");
-map.set('3-1', "baz");
-
-var mapAsc = new Map([...map.entries()].sort());
-
-console.log(mapAsc)
-
+require('./app/routes/app.routes.js')(app);
 
 // listen for requests
 app.listen(3000, () => {

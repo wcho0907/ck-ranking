@@ -15,7 +15,7 @@ exports.symbols = (req, res) => {
 exports.history = (req, res) => {
     var pool = db.getPool(); // re-uses existing if already created or creates new one
     pool.getConnection(function(err, connection) {
-        connection.query('SELECT * FROM px_udf_data_1m',function(error, rows, fields){
+        connection.query('SELECT * FROM ct_udf_history',function(error, rows, fields){
             //檢查是否有錯誤
             if(error){
                 throw error;

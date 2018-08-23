@@ -1,0 +1,140 @@
+{
+    "id": "0x",
+    "symbol": "zrx",
+    "name": "0x",
+    "categories": [
+      "Protocol"
+    ],
+    "localization": {
+      "en": "0x",
+      "es": "0x",
+      "de": "0x",
+      "nl": "0x",
+      "pt": "0x",
+      "fr": "0x",
+      "it": "0x",
+      "hu": "0x",
+      "ro": "0x",
+      "sv": "0x",
+      "pl": "0x",
+      "id": "0x",
+      "zh": "0x协议",
+      "zh-tw": "0x協議",
+      "ja": "0x",
+      "ko": "제로엑스",
+      "ru": "0x",
+      "ar": "0x",
+      "th": "0x",
+      "vi": "0x",
+      "tr": "0x"
+    },
+    "description": {
+      "en": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "es": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "de": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "nl": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "pt": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "fr": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "it": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "hu": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "ro": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "sv": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "pl": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "id": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "zh": "",
+      "zh-tw": "",
+      "ja": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "ko": "제로엑스는 '이더리움 블록체인 위에서 동작하는 탈중앙화 거래소(Decentralized exchange)를 위한 오픈 프로토콜'을 지향합니다. \r\n\r\n제로엑스 팀은 가까운 미래에 수천개의 이더리움 기반 토큰(ERC 20)이 사용될 것이고, 이 토큰들을 신뢰할 수 있는 효율적인 방법으로 상호 교환하고자 하는 수요가 발생할 것으로 기대합니다. \r\n\r\n이를 위해 제로엑스는 스마트 컨트랙트를 활용한 오픈 프로토콜을 통해 탈중앙화 거래소를 누구나 운영할 수 있도록 하고자 하며,\r\n\r\n주문이 체결될 때에만 거래를 블록체인에 기록함으로써 기존 탈중앙화 거래소의 느린 속도와 비효율을 개선하고자 합니다.",
+      "ru": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "ar": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "th": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "vi": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer.",
+      "tr": "0x protocol will act as a critical piece of infrastructure for the token economy, allowing Ethereum smart contracts to programmatically and seamlessly exchange Ethereum-based assets. In 0x protocol, orders are transported off-chain, massively reducing gas costs and eliminating blockchain bloat. Relayers help broadcast orders and collect a fee each time they facilitate a trade. Anyone can build a relayer."
+    },
+    "links": {
+      "homepage": [
+        "https://0xproject.com/",
+        "",
+        ""
+      ],
+      "blockchain_site": [
+        "https://etherscan.io/token/ZRX",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "official_forum_url": [
+        "",
+        "",
+        ""
+      ],
+      "chat_url": [
+        "",
+        "",
+        ""
+      ],
+      "announcement_url": [
+        "",
+        ""
+      ],
+      "twitter_screen_name": "0xproject",
+      "facebook_username": "",
+      "bitcointalk_thread_identifier": null,
+      "telegram_channel_identifier": ""
+    },
+    "image": {
+      "thumb": "https://assets.coingecko.com/coins/images/863/thumb/0x.png?1510040226",
+      "small": "https://assets.coingecko.com/coins/images/863/small/0x.png?1510040226"
+    },
+    "country_origin": "US",
+    "ico_data": {
+      "ico_start_date": "2017-08-15T00:00:00.000Z",
+      "ico_end_date": "2017-09-16T00:00:00.000Z",
+      "short_desc": "The protocol for decentralized exchange",
+      "description": "0x is an open protocol that facilitates trustless, low friction exchange of Ethereum-based assets.",
+      "links": {
+        "web": "https://www.0xproject.com/#home",
+        "blog": "https://medium.com/0x-project",
+        "slack": "https://slack.0xproject.com/",
+        "github": "https://github.com/0xProject/contracts",
+        "twitter": "https://twitter.com/0xproject",
+        "facebook": "https://www.facebook.com/0xProject/",
+        "linkedin": "https://www.linkedin.com/company-beta/17942619/",
+        "telegram": "",
+        "whitepaper": "https://www.0xproject.com/pdfs/0x_white_paper.pdf"
+      },
+      "softcap_currency": "",
+      "hardcap_currency": "",
+      "total_raised_currency": "USD",
+      "softcap_amount": null,
+      "hardcap_amount": null,
+      "total_raised": "24000000.0",
+      "quote_pre_sale_currency": "",
+      "base_pre_sale_amount": null,
+      "quote_pre_sale_amount": null,
+      "quote_public_sale_currency": "USD",
+      "base_public_sale_amount": "1.0",
+      "quote_public_sale_amount": "0.048",
+      "accepting_currencies": "ETH",
+      "country_origin": "US",
+      "pre_sale_start_date": null,
+      "pre_sale_end_date": null,
+      "whitelist_url": "",
+      "whitelist_start_date": null,
+      "whitelist_end_date": null,
+      "bounty_detail_url": "",
+      "amount_for_sale": null,
+      "kyc_required": true,
+      "whitelist_available": null,
+      "pre_sale_available": null,
+      "pre_sale_ended": false
+    },
+    "market_cap_rank": 27,
+    "coingecko_rank": 25,
+    "coingecko_score": 62.193,
+    "developer_score": 82.082,
+    "community_score": 47.215,
+    "liquidity_score": 54.77,
+    "public_interest_score": 31.417
+}

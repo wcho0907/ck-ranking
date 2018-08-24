@@ -1,5 +1,5 @@
 var db = require('../../config/database.config.js');
-
+var count = 0;
 exports.config = (req, res) => {
     var retObj = {"supports_group_request":false,"supports_marks":false,"supports_search":true,"supports_timescale_marks":false,"support_time":true,"supported_resolutions":["1","5","30","60","D","2D"],"session-regular":"24x7"};
     res.header("Access-Control-Allow-Origin", "*");
@@ -13,14 +13,37 @@ exports.symbols = (req, res) => {
     res.send(retObj);
 }
 exports.history = (req, res) => {
-    var pool = db.getPool(); // re-uses existing if already created or creates new one
-    pool.getConnection(function(err, connection) {
-        connection.query('SELECT * FROM ct_udf_history',function(error, rows, fields){
+    // http://localhost:5000/history?symbol=USD-BTC&resolution=30&from=1532487255&to=1535079315
+    console.log(req.query.from + "-" + req.query.to);
+    var result = {
+		t: [], c: [], o: [], h: [], l: [], v: [],
+		s: "ok"
+	};
+    var conn = db.getConnection(); // re-uses existing if already created or creates new one
+    conn.connect(function(err) {
+        conn.query('SELECT * FROM ct_udf_history',function(error, rows, fields){
             //檢查是否有錯誤
+            console.log(++count);
+            conn.end();
             if(error){
                 throw error;
             }
-            res.send({'test': rows[0]});
+            result.t.push(parseInt(req.query.from));
+            result.o.push(parseFloat(rows[0].openPrice));
+            result.h.push(parseFloat(rows[0].highPrice));
+            result.l.push(parseFloat(rows[0].lowPrice));
+            result.c.push(parseFloat(rows[0].closePrice));
+            result.v.push(parseInt(rows[0].totalVolume));
+
+            result.t.push(parseInt(req.query.to) - 1);
+            result.o.push(parseFloat(rows[0].openPrice+100));
+            result.h.push(parseFloat(rows[0].highPrice+100));
+            result.l.push(parseFloat(rows[0].lowPrice+100));
+            result.c.push(parseFloat(rows[0].closePrice+100));
+            result.v.push(parseInt(rows[0].totalVolume+100));
+            res.header("Access-Control-Allow-Origin", "*");
+            res.type('text/html; charset=UTF-8');
+            res.send(result);
         });
     });
 }

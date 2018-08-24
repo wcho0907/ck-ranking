@@ -1,21 +1,13 @@
 var mysql = require('mysql');
 
-var pool;
-
 module.exports = {
-    getPool: function () {
-      if (pool) return pool;
-      pool = mysql.createPool({
+    getConnection: function () {
+      var conn = mysql.createConnection({
         host     : '127.0.0.1',
         user     : 'charting',
         password : 'cloudEx88',
         database : 'charting'
       });
-      return pool;
+      return conn;
     }
 };
-
-// module.exports = {
-//     url: 'mongodb://localhost:27017/easy-notes'
-// }
-

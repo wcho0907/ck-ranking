@@ -25,7 +25,7 @@ exports.loadAll = (req, res) => {
 function doCryptocompare(req, res){
     switch(req.query.function){
         case 'history':
-            var exchange = req.query.exchange;
+            var exchange = "CLOUDEX"; //req.query.exchange;
             var base = req.query.base;
             var quote = req.query.quote;
             console.log(exchange + " - " + base + " - " + quote);
@@ -62,7 +62,7 @@ function doCryptocompare(req, res){
                         item.unshift(exchange);
                         item.splice(2, 0, base, quote);
                         //console.log(item, index, array); // 物件, 索引, 全部陣列
-                        return item;                     // forEach 沒在 return 的，所以這邊寫了也沒用
+                        return item;                     
                     });
 
                     var conn = db.getConnection(); // re-uses existing if already created or creates new one

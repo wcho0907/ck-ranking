@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 // create express app
 const app = express();
 
+const port = 7000;
+
 // parse requests of content-type - application/x-www-form-urlencoded
 //app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -22,8 +24,8 @@ app.get('/', (req, res) => {
 require('./app/routes/app.routes.js')(app);
 
 // listen for requests
-app.listen(5000, () => {
-    console.log("Server is listening on port 5000");
+app.listen(port, () => {
+    console.log("Server is listening on port " + port);
 });
 
 var allowCrossDomain = function(req, res, next) {

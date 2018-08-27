@@ -5,3 +5,4 @@ npm-debug.log
 package-lock.json
 .env
 .DS_Store
+symbol/symbol-list.json

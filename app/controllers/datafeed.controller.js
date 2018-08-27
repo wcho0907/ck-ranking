@@ -77,7 +77,7 @@ exports.history = (req, res) => {
                     result.h.push(parseFloat(item.highPrice));
                     result.l.push(parseFloat(item.lowPrice));
                     result.c.push(parseFloat(item.closePrice));
-                    result.v.push(parseInt(item.totalVolume));
+                    result.v.push(parseFloat(item.totalVolume));
                 });
                 res.header("Access-Control-Allow-Origin", "*");
                 res.type('text/html; charset=UTF-8');

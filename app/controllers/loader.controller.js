@@ -28,11 +28,25 @@ function doCryptocompare(req, res){
             var exchange = "CLOUDEX"; //req.query.exchange;
             var base = req.query.base;
             var quote = req.query.quote;
-            console.log(exchange + " - " + base + " - " + quote);
+            var toTs = req.query.toTs;
+            console.log(exchange + " - " + base + " - " + quote + " - " + toTs);
             async.series([
                 function (callback) {
+                    var tURI;
+                    switch(base){
+                        case 'MTT':
+                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'ZRX' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=1&e=OKEX';
+                            break;
+                        case 'TEST1':
+                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'OMG' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=1&e=OKEX';
+                            break;  
+                        case 'TEST2':
+                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'WTC' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=1&e=OKEX';
+                            break;                                                        
+                    }
+                    console.log("uri: " + tURI);
                     request({
-                        uri: 'https://min-api.cryptocompare.com/data/histominute?fsym=ZRX&tsym=ETH&toTs=1535241600&limit=1440&aggregate=1&e=OKEX',
+                        uri: tURI,
                         method: 'GET',
                         timeout: 10000,
                         followRedirect: true,
@@ -71,6 +85,7 @@ function doCryptocompare(req, res){
                         var sql = "INSERT INTO ct_udf_history (exchange, startUnixTimestampSec, baseTokenSymbol, quoteTokenSymbol, openPrice, highPrice, lowPrice, closePrice, totalVolume) VALUES ?";
                         conn.query(sql, [hisValue], function(err, results) {
                             if (_err) console.log(_err);
+                            res.send('Done');
                         });
                     });
                 }

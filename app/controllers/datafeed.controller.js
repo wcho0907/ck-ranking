@@ -8,7 +8,7 @@ exports.config = (req, res) => {
     retObj["supports_search"] = true;
     retObj["supports_timescale_marks"] = false;
     retObj["support_time"] = true;
-    retObj["supported_resolutions"] = ["1"];//["1","5","30","60","D","2D"];
+    retObj["supported_resolutions"] = ["1", "5"];//["1","5","30","60","D","2D"];
     retObj["session-regular"] = "24x7";
 
     res.header("Access-Control-Allow-Origin", "*");
@@ -22,8 +22,8 @@ exports.symbols = (req, res) => {
     var retObj = {};
     retObj["name"] = symBase + "-" + symQuote;
     retObj["description"] = "CloudEX, " + retObj["name"];
-    retObj["supported_resolutions"] = ["1"];//["1","5","30","60","D"];
-    retObj["intraday_multipliers"] = ["1"];//["1","5","30","60"];
+    retObj["supported_resolutions"] = ["1","5"];//["1","5","30","60","D"];
+    retObj["intraday_multipliers"] = ["1","5"];//["1","5","30","60"];
     retObj["has_intraday"] = true;
     retObj["minmov"] = 1;
     retObj["pricescale"] = 100000;

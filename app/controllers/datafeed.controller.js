@@ -25,8 +25,9 @@ exports.symbols = (req, res) => {
     retObj["supported_resolutions"] = ["1"];//["1","5","30","60","D"];
     retObj["intraday_multipliers"] = ["1"];//["1","5","30","60"];
     retObj["has_intraday"] = true;
-    retObj["minmov"] = true;
-    retObj["pricescale"] = true;
+    retObj["minmov"] = 1;
+    retObj["pricescale"] = 100000;
+    retObj["volume_precision"] = 2;
     retObj["session"] = "24x7";
     retObj["timezone"] = "Asia\/Taipei";
     retObj["ticker"] = retObj["name"];
@@ -62,7 +63,7 @@ exports.history = (req, res) => {
                 res.type('text/html; charset=UTF-8');
                 var noData = {};
                 noData["s"] = "no_data";
-                noData["nextTime"] = parseInt(hisFrom) - 60;
+                //noData["nextTime"] = parseInt(hisFrom) - 60; // makes continuous data demanding
                 res.send(noData);
                 return;
             }

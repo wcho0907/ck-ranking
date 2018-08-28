@@ -1,9 +1,8 @@
 module.exports = (app) => {
     const ranking = require('../controllers/ranking.controller.js');
-
     const loader = require('../controllers/loader.controller.js');
-
     const datafeed = require('../controllers/datafeed.controller.js');
+    const token = require('../controllers/token.controller.js');
 
     app.get('/ranking', ranking.rankAll);
 
@@ -14,4 +13,6 @@ module.exports = (app) => {
     app.get('/symbols', datafeed.symbols);
 
     app.get('/history', datafeed.history);
+
+    app.get('/token', token.handleAll);
 }

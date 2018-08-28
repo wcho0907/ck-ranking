@@ -29,19 +29,20 @@ function doCryptocompare(req, res){
             var base = req.query.base;
             var quote = req.query.quote;
             var toTs = req.query.toTs;
-            console.log(exchange + " - " + base + " - " + quote + " - " + toTs);
+            var resolution = req.query.resolution; 
+            console.log(exchange + " - " + base + " - " + quote + " - " + toTs + resolution);
             async.series([
                 function (callback) {
                     var tURI;
                     switch(base){
                         case 'MTT':
-                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'ZRX' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=1&e=OKEX';
+                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'ZRX' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=' + resolution + '&e=OKEX';
                             break;
                         case 'TEST1':
-                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'OMG' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=1&e=OKEX';
+                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'OMG' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=' + resolution + '&e=OKEX';
                             break;  
                         case 'TEST2':
-                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'WTC' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=1&e=OKEX';
+                            tURI = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + 'WTC' + '&tsym=' + 'ETH' + '&toTs=' + toTs + '&limit=1440&aggregate=' + resolution + '&e=OKEX';
                             break;                                                        
                     }
                     console.log("uri: " + tURI);
@@ -74,7 +75,8 @@ function doCryptocompare(req, res){
                     
                     hisValue.forEach(function(item, index, array){
                         item.unshift(exchange);
-                        item.splice(2, 0, base, quote);
+                        item.unshift(resolution);
+                        item.splice(3, 0, base, quote);
                         //console.log(item, index, array); // 物件, 索引, 全部陣列
                         return item;                     
                     });
@@ -82,7 +84,7 @@ function doCryptocompare(req, res){
                     var conn = db.getConnection(); // re-uses existing if already created or creates new one
 
                     conn.connect(function(_err) {
-                        var sql = "INSERT INTO ct_udf_history (exchange, startUnixTimestampSec, baseTokenSymbol, quoteTokenSymbol, openPrice, highPrice, lowPrice, closePrice, totalVolume) VALUES ?";
+                        var sql = "INSERT INTO ct_udf_history (resolution, exchange, startUnixTimestampSec, baseTokenSymbol, quoteTokenSymbol, openPrice, highPrice, lowPrice, closePrice, totalVolume) VALUES ?";
                         conn.query(sql, [hisValue], function(err, results) {
                             if (_err) console.log(_err);
                             res.send('Done');

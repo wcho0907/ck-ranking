@@ -48,8 +48,8 @@ exports.history = (req, res) => {
 
     var conn = db.getConnection();
     conn.connect(function(err) {
-        var sql = "SELECT * FROM ct_udf_history WHERE exchange = ? AND baseTokenSymbol = ? AND quoteTokenSymbol = ? AND startUnixTimestampSec >= ? AND startUnixTimestampSec < ?";
-        var query = conn.query(sql, ["CLOUDEX", hisBase, hisQuote, hisFrom, hisTo], function(error, rows){
+        var sql = "SELECT * FROM ct_udf_history WHERE resolution = ? AND exchange = ? AND baseTokenSymbol = ? AND quoteTokenSymbol = ? AND startUnixTimestampSec >= ? AND startUnixTimestampSec < ?";
+        var query = conn.query(sql, [hisResolution, "CLOUDEX", hisBase, hisQuote, hisFrom, hisTo], function(error, rows){
             console.log(++count);
             conn.end();
             if(error){

@@ -14,5 +14,5 @@ CREATE TABLE `ct_udf_history` (
   `closePrice` decimal(30,18) unsigned NOT NULL,
   `totalVolume` decimal(30,18) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk1` (`resolution`,`exchange`,`startUnixTimestampSec`,`baseTokenSymbol`,`quoteTokenSymbol`)
-) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+  UNIQUE KEY `uk1` (`resolution`,`exchange`,`baseTokenSymbol`,`quoteTokenSymbol`,`startUnixTimestampSec`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii

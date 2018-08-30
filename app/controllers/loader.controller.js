@@ -65,28 +65,32 @@ function doCryptocompare(req, res){
                 ],
                 function (err, results) {
                     var hisArray = results[0].Data;
-                    // Converting Array of Objects into Array of Arrays
-                    var hisValue = hisArray.map(function(obj) {
-                        delete obj['volumeto'];
-                        return Object.keys(obj).map(function(key) {
-                            return obj[key];
-                        });
+
+                    var hisValue = [];
+                    hisArray.forEach(function(item, index, array){
+                        var arrItem = [];
+                        arrItem.push(resolution);
+                        arrItem.push(exchange);
+                        arrItem.push(item["time"]);
+                        arrItem.push(base);
+                        arrItem.push(quote);
+                        arrItem.push(item["open"]);
+                        arrItem.push(item["high"]);
+                        arrItem.push(item["low"]);
+                        arrItem.push(item["close"]);
+                        arrItem.push(item["volumefrom"]);
+
+                        hisValue.push(arrItem);
                     });
-                    
-                    hisValue.forEach(function(item, index, array){
-                        item.unshift(exchange);
-                        item.unshift(resolution);
-                        item.splice(3, 0, base, quote);
-                        //console.log(item, index, array); // 物件, 索引, 全部陣列
-                        return item;                     
-                    });
+                    //res.send(hisValue);
 
                     var conn = db.getConnection(); // re-uses existing if already created or creates new one
 
                     conn.connect(function(_err) {
+                        if (_err) console.log(_err);
                         var sql = "INSERT INTO ct_udf_history (resolution, exchange, startUnixTimestampSec, baseTokenSymbol, quoteTokenSymbol, openPrice, highPrice, lowPrice, closePrice, totalVolume) VALUES ?";
                         conn.query(sql, [hisValue], function(err, results) {
-                            if (_err) console.log(_err);
+                            if (err) console.log(err);
                             res.send('Done');
                         });
                     });

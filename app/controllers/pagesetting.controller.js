@@ -70,7 +70,7 @@ function readSheets(auth) {
             var partCount = 0;
             metaRows.map((row) => {
                 var row0 = row[0] ? row[0].trim() : "";
-
+                console.log(">>>" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
                 if(row0==="基本資料"){
                     partNow = "基本資料";
                     partCount = 0;
@@ -83,10 +83,13 @@ function readSheets(auth) {
                     partNow = "頁籤內容";
                     partCount = -1;
                 }
-                else{
+                else{``
                     if(partNow==="基本資料"){
                         if(partNow ==="基本資料"){
                             if(row[0]) basicPart[row[0].replace(/ *\([^)]*\) */g, "")] = row[1]; 
+                        }
+                        else if(partNow ==="頁籤資料"){
+                            console.log(">>>" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
                         }
                     }
                 }

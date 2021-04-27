@@ -64,8 +64,7 @@ function readSheets(auth) {
             var sheetRows = results[0];
             var basicPart = {};
             var priTabPart = {};
-            var detailPart = [];
-            var criteriaObj = {};
+            var detailPart = {};
             var partNow = "";
             var partCount = 0;
             var priTabNow = "";
@@ -101,8 +100,17 @@ function readSheets(auth) {
                         }
                         else{
                             if(row[2]){
-                               priTabPart[priTabNow]["secTabPart"][row[2]] =  row[3];
+                                var secNode = { name : row[3], module : {}}
+                                priTabPart[priTabNow]["secTabPart"][row[2]] = secNode;
                             }
+                        }
+                    }
+                    else if(partNow ==="頁籤內容"){
+                        if(row[0]){
+
+                        }
+                        else{
+
                         }
                     }
                 }

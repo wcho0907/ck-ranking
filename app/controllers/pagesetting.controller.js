@@ -63,14 +63,15 @@ function readSheets(auth) {
             // 2. 
             var sheetRows = results[0];
             var basicPart = {};
-            var tabPart = [];
+            var priTabPart = {};
             var detailPart = [];
             var criteriaObj = {};
             var partNow = "";
             var partCount = 0;
+            var priTabNow = "";
             sheetRows.map((row) => {
                 var row0 = row[0] ? row[0].trim() : "";
-                console.log(">>>" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
+                
                 if(row0==="基本資料"){
                     partNow = "基本資料";
                     partCount = 0;
@@ -83,16 +84,29 @@ function readSheets(auth) {
                     partNow = "頁籤內容";
                     partCount = -1;
                 }
-                else{``
-                    if(partNow==="基本資料"){
-                        if(partNow ==="基本資料"){
-                            if(row[0]) basicPart[row[0].replace(/ *\([^)]*\) */g, "")] = row[1]; 
+                else{
+                    if(partNow ==="基本資料"){
+                        if(row[0]) basicPart[row[0].replace(/ *\([^)]*\) */g, "")] = row[1]; 
+                    }
+                    else if(partNow ==="頁籤資料"){
+                        if(row[0]){
+                            // Remove contrl characters from string (/b baclspace)
+                            var thisPriTab = row[0].replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+                            console.log("thisTab: " + thisPriTab);
+                            if(thisPriTab.indexOf("tab")>= 0){
+                                priTabNow = thisPriTab;
+                                var priNode = { name : row[1], secTabPart : { [row[2]] : row[3]}}
+                                priTabPart[priTabNow] = priNode;
+                            }
                         }
-                        else if(partNow ==="頁籤資料"){
-                            console.log(">>>" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
+                        else{
+                            if(row[2]){
+                               priTabPart[priTabNow]["secTabPart"][row[2]] =  row[3];
+                            }
                         }
                     }
                 }
+                console.log(partNow + "-" + priTabNow + ">" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
             });
 
             
@@ -144,7 +158,7 @@ function readSheets(auth) {
 
             var metaCoins = {};
 
-            returnObj["Sheet1"] = {"basicPart": basicPart, "tabPart": tabPart, "detailPart": detailPart};
+            returnObj["Sheet1"] = {"basicPart": basicPart, "priTabPart": priTabPart, "detailPart": detailPart};
             //returnObj["Sheet2"] = dataRows;
             respon.send(returnObj);
 

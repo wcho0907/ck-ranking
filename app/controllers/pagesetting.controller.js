@@ -61,14 +61,14 @@ function readSheets(auth) {
             var returnObj = {};
 
             // 2. 
-            var metaRows = results[0];
+            var sheetRows = results[0];
             var basicPart = {};
             var tabPart = [];
             var detailPart = [];
             var criteriaObj = {};
             var partNow = "";
             var partCount = 0;
-            metaRows.map((row) => {
+            sheetRows.map((row) => {
                 var row0 = row[0] ? row[0].trim() : "";
                 console.log(">>>" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
                 if(row0==="基本資料"){
@@ -95,9 +95,6 @@ function readSheets(auth) {
                 }
             });
 
-            criteriaObj = metaRows;
-            //console.log(scoreCriteria);
-            //console.log(validCriteria);
             
             var dataRows = results[1];
             // var coinData = [];
@@ -148,13 +145,12 @@ function readSheets(auth) {
             var metaCoins = {};
 
             returnObj["Sheet1"] = {"basicPart": basicPart, "tabPart": tabPart, "detailPart": detailPart};
-            returnObj["Sheet2"] = dataRows;
+            //returnObj["Sheet2"] = dataRows;
             respon.send(returnObj);
 
             var end = new Date() - start;
             console.log("Execution time: ", end);
             return;
-
         }
     );
 }

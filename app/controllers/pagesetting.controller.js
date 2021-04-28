@@ -68,6 +68,7 @@ function readSheets(auth) {
             var partNow = "";
             var partCount = 0;
             var priTabNow = "";
+            var modAttrs = [];
             sheetRows.map((row) => {
                 var row0 = row[0] ? row[0].trim() : "";
                 
@@ -85,75 +86,77 @@ function readSheets(auth) {
                 }
                 else{
                     if(partNow ==="基本資料"){
+                        // 去括號及其內容
                         if(row[0]) basicPart[row[0].replace(/ *\([^)]*\) */g, "")] = row[1]; 
                     }
                     else if(partNow ==="頁籤資料"){
                         if(row[0]){
-                            // Remove contrl characters from string (/b baclspace)
+                            // Remove contrl characters from string (/b baclspace) 可能是合併儲存格造成
                             var thisPriTab = row[0].replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
                             console.log("thisTab: " + thisPriTab);
                             if(thisPriTab.indexOf("tab")>= 0){
                                 priTabNow = thisPriTab;
-                                var priNode = { name : row[1], secTabPart : { [row[2]] : row[3]}}
+                                var priNode = { name : row[1], secTabPart : { [priTabNow + "_" + row[2]] : { name : row[3], module : {}}}}
                                 priTabPart[priTabNow] = priNode;
                             }
                         }
                         else{
                             if(row[2]){
                                 var secNode = { name : row[3], module : {}}
-                                priTabPart[priTabNow]["secTabPart"][row[2]] = secNode;
+                                priTabPart[priTabNow]["secTabPart"][priTabNow + "_" + row[2]] = secNode;
                             }
                         }
                     }
                     else if(partNow ==="頁籤內容"){
                         if(row[0]){
-
+                            var thisPriTab = row[0].replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+                            // Get column name
+                            if(row[0].startsWith("第一層")){
+                                var row3 = row[3].replace(/ *\([^)]*\) */g, "").replace("*","");
+                                var row4 = row[4].replace(/ *\([^)]*\) */g, "").replace("*","");
+                                var row5 = row[5].replace(/ *\([^)]*\) */g, "").replace("*","");
+                                var row6 = row[6].replace(/ *\([^)]*\) */g, "").replace("*","");
+                                var row7 = row[7].replace(/ *\([^)]*\) */g, "").replace("*","");
+                                modAttrs.push(row3);
+                                modAttrs.push(row4);
+                                modAttrs.push(row5);
+                                modAttrs.push(row6);
+                                modAttrs.push(row7);
+                                console.log("kk"+ modAttrs[0] + "-" + modAttrs[1] + "-" + modAttrs[2] + "-" + modAttrs[3] + "-" + modAttrs[4]);
+                            } else if(thisPriTab.indexOf("tab")>= 0){
+                                // 去括號及其內容
+                                var modTitle = row[2].replace(/ *\([^)]*\) */g, "");
+                                //console.log("yes 2 >>" + row[1] + "<< >>" + modTitle + "<<");
+                                priTabNow = thisPriTab;
+                                var modData = {};
+                                modData[modAttrs[0]] = row[3];
+                                modData[modAttrs[1]] = row[4];
+                                modData[modAttrs[2]] = row[5];
+                                modData[modAttrs[3]] = row[6];
+                                modData[modAttrs[4]] = row[7];
+                                priTabPart[priTabNow]["secTabPart"][priTabNow + "_" + row[1]]["module"][modTitle] = modData;
+                            }
                         }
                         else{
 
+                            if(row[1]){
+                                // 去括號及其內容
+                                var modTitle = row[2].replace(/ *\([^)]*\) */g, "");
+                                var modData = {};
+                                modData[modAttrs[0]] = row[3];
+                                modData[modAttrs[1]] = row[4];
+                                modData[modAttrs[2]] = row[5];
+                                modData[modAttrs[3]] = row[6];
+                                modData[modAttrs[4]] = row[7];
+                                priTabPart[priTabNow]["secTabPart"][priTabNow + "_" + row[1]]["module"][modTitle] = modData;
+                            }
                         }
                     }
                 }
                 console.log(partNow + "-" + priTabNow + ">" + row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3]);
             });
-
             
             var dataRows = results[1];
-            // var coinData = [];
-            // var outputCoins = [];
-            // var dataTitle, dataTitleLen;
-            // // 3. Build output data by coin
-            // dataRows.map((row) => {
-            //     var row0 = row[0];
-            //     if(row0==="coin"){
-            //         dataTitle = row;
-            //         dataTitleLen = dataTitle.length;
-            //     }
-            //     else{
-            //         // 1. Form coinSheetObj <-- contains all criteria from the data sheet
-            //         var coinSheetObj = {};
-            //         var score = 0;
-                    
-            //         for (var i = 0; i < dataTitleLen; i++) {
-            //             coinSheetObj[dataTitle[i].trim()] = row[i] ? row[i].trim() : "";
-            //         }
-
-            //         // 2. Traverse ordered and valid criteria of meta sheet to reform obj
-            //         var coinValidObj = {};
-            //         coinValidObj["id"] = row0;
-            //         outputCoins.push(row0);
-            //         for (var prop in validCriteria) {
-            //             coinValidObj[prop] = coinSheetObj[prop];
-            //             if(scoreCriteria[prop]==="Y"){
-            //                 coinValidObj[prop + "_v"] = coinSheetObj[prop + "_v"];
-            //                 score += parseFloat(coinSheetObj[prop + "_v"]);
-            //             }
-            //             //console.log("##" + prop);
-            //         }
-            //         coinValidObj["score"] = score.toString().trim();
-            //         coinData.push(coinValidObj);
-            //     }
-            // });
 
             function compare(a,b) {
                 if (parseFloat(a.score) < parseFloat(b.score))
@@ -166,7 +169,7 @@ function readSheets(auth) {
 
             var metaCoins = {};
 
-            returnObj["Sheet1"] = {"basicPart": basicPart, "priTabPart": priTabPart, "detailPart": detailPart};
+            returnObj["Sheet1"] = {"basicPart": basicPart, "priTabPart": priTabPart}; //, "detailPart": detailPart};
             //returnObj["Sheet2"] = dataRows;
             respon.send(returnObj);
 

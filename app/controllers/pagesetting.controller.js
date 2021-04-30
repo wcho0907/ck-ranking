@@ -64,7 +64,6 @@ function readSheets(auth) {
             var sheetRows = results[0];
             var basicPart = {};
             var priTabPart = {};
-            var detailPart = {};
             var partNow = "";
             var partCount = 0;
             var priTabNow = "";
@@ -87,7 +86,12 @@ function readSheets(auth) {
                 else{
                     if(partNow ==="基本資料"){
                         // 去括號及其內容
-                        if(row[0]) basicPart[row[0].replace(/ *\([^)]*\) */g, "")] = row[1]; 
+                        // 檢查必輸欄位
+                        if(row[0]){
+                            row[1] = row[1] ? row[1].trim() : "";
+                            var retObj = checkRequired(row[0].replace(/ *\([^)]*\) */g, ""), row[1]);
+                            basicPart[Object.keys(retObj)[0]] = Object.values(retObj)[0]; 
+                        }
                     }
                     else if(partNow ==="頁籤資料"){
                         if(row[0]){
@@ -138,7 +142,6 @@ function readSheets(auth) {
                             }
                         }
                         else{
-
                             if(row[1]){
                                 // 去括號及其內容
                                 var modTitle = row[2].replace(/ *\([^)]*\) */g, "");
@@ -158,14 +161,14 @@ function readSheets(auth) {
             
             var dataRows = results[1];
 
-            function compare(a,b) {
-                if (parseFloat(a.score) < parseFloat(b.score))
-                  return 1;
-                if (parseFloat(a.score) > parseFloat(b.score))
-                  return -1;
-                return 0;
+            function checkRequired(keyStr, valueStr) {
+                if (keyStr.endsWith("*")){
+                    keyStr = keyStr.replace("*","");
+
+                    if(!valueStr) valueStr = "[***必要欄位 不能為空值***]";
+                }
+                return { [keyStr] : valueStr};
             }
-            //coinData.sort(compare);
 
             var metaCoins = {};
 
